@@ -1,0 +1,105 @@
+/* 背景画像のスタイル */
+.background {
+    position: relative; /* 疑似要素を正しく配置するために必要 */
+    background-image: url('/tekito1.jpg'); /* 背景画像 */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* ビューポート全体の高さ */
+    width: 100vw; /* ビューポート全体の幅 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 背景画像を暗くするためのオーバーレイ */
+.background::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1; /* 背景より上に配置 */
+}
+
+/* 背景内の子要素をオーバーレイの上に表示 */
+.background > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* 左側のパネル */
+.leftPanel {
+    position: absolute;
+    top: 10px; /* 画面の上部から少し余裕を持たせる */
+    left: 30px;
+    width: 24%;
+    height: calc(95vh - 180px - 20px); /* bottomPanelの高さを引いた分 */
+    background: rgba(255, 255, 255, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+}
+
+/* 右側のパネル */
+.rightPanel {
+    position: absolute;
+    top: 10px; /* 画面の上部から少し余裕を持たせる */
+    right: 30px;
+    width: 24%;
+    height: calc(95vh - 180px - 20px); /* bottomPanelの高さを引いた分 */
+    background: rgba(255, 255, 255, 0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+}
+
+/* 下部の大きな長方形 */
+.bottomPanel {
+    position: absolute;
+    bottom: 10px; /* 画面の下部から少し余裕を持たせる */
+    width: 1860px;
+    height: 180px;
+    border: 2px solid #fff; /* 外枠 */
+    display: flex;
+    justify-content: space-between; /* 等間隔で配置 */
+    align-items: center;
+}
+
+/* 3つのセクションを均等に分ける */
+.section {
+    width: calc(1860px / 3); /* 3等分 */
+    height: 100%; /* 親要素の高さに一致 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* 縦線を追加するクラス */
+.withDivider {
+    border-left: 2px solid #fff; /* 縦線 */
+}
+
+/* 各ラベルのスタイル */
+.label {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 42px; /* ラベルのフォントサイズ */
+    font-weight: bold;
+    color: #FFFFFF;
+    position: absolute;
+    top: 8%; /* セクションの上部中央に配置 */
+    text-align: center;
+}
