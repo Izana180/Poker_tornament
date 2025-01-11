@@ -12,17 +12,32 @@ export default function Home() {
     const [inputBuyIn, setInputBuyIn] = useState(0);
     const [inputStartStack, setInputStartStack] = useState(0);
     const [history, setHistory] = useState([]);
+    const [currentIntervalIndex, setCurrentIntervalIndex] = useState(0);
+    const [remainingTime, setRemainingTime] = useState(60);
+    const [isTimerPaused, setIsTimerPaused] = useState(false);
+    const [hasPlayedChime, setHasPlayedChime] = useState(false);
+    const [chimeAudio, setChimeAudio] = useState(null);
 
-    const timeIntervals = [50, 50, 40, 40, 30, 30, 20, 20, 10, 10, 10, 10];
+    const timeIntervals = [50, 50, 50, 40, 30, 30, 20, 20, 10, 10, 10, 10];
     const blindsLevels = ["5/10", "10/20", "15/30", "20/40", "30/60", "40/80", "50/100", "100/200", "200/400", "300/600", "500/1000", "1000/2000"];
     const anteLevels = [10, 20, 30, 40, 60, 80, 100, 200, 400, 600, 1000, 2000];
     const nextLevelInfo = ["10/20", "15/30", "20/40", "30/60", "40/80", "50/100", "100/200", "200/400", "300/600", "500/1000", "1000/2000", "FINAL LEVEL"];
-    const [currentIntervalIndex, setCurrentIntervalIndex] = useState(0);
-    const [remainingTime, setRemainingTime] = useState(timeIntervals[0] * 60);
-    const [isTimerPaused, setIsTimerPaused] = useState(false);
-    const [hasPlayedChime, setHasPlayedChime] = useState(false);
 
-    const chimeAudio = new Audio("/Time_Signal-Beep01-2(Mid).mp3");
+    useEffect(() => {
+        const enableAudio = () => {
+            setChimeAudio(new Audio("/Time_Signal-Beep01-2(Mid).mp3"));
+            window.removeEventListener("click", enableAudio);
+            window.removeEventListener("keydown", enableAudio);
+        };
+
+        window.addEventListener("click", enableAudio);
+        window.addEventListener("keydown", enableAudio);
+
+        return () => {
+            window.removeEventListener("click", enableAudio);
+            window.removeEventListener("keydown", enableAudio);
+        };
+    }, []);
 
     useEffect(() => {
         const handleKeyDown = (event) => {
@@ -43,7 +58,7 @@ export default function Home() {
                 setRemainingTime((prevTime) => prevTime - 1);
             }, 1000);
 
-            if (remainingTime <= 2 && !hasPlayedChime) {
+            if (remainingTime <= 2 && !hasPlayedChime && chimeAudio) {
                 chimeAudio.play();
                 setHasPlayedChime(true);
             }
@@ -54,7 +69,7 @@ export default function Home() {
             setRemainingTime(timeIntervals[currentIntervalIndex + 1] * 60);
             setHasPlayedChime(false);
         }
-    }, [remainingTime, currentIntervalIndex, isTimerPaused, hasPlayedChime]);
+    }, [remainingTime, currentIntervalIndex, isTimerPaused, hasPlayedChime, chimeAudio]);
 
     const formatTime = (time) => {
         const minutes = Math.floor(time / 60);
