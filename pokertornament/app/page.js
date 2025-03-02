@@ -137,13 +137,13 @@ export default function Home() {
         <div className={Styles.background}>
             <div className={Styles.leftPanel}>
                 <div className={Styles.prizeDistribution}>
-                    <div>1ST: ￥{prizeDistribution.first}</div>
-                    <div>2ND: ￥{prizeDistribution.second}</div>
-                    <div>3RD: ￥{prizeDistribution.third}</div>
-                    <div>4TH: ￥{prizeDistribution.fourth}</div>
+                    <div>1ST: {prizeDistribution.first}pts</div>
+                    <div>2ND: {prizeDistribution.second}pts</div>
+                    <div>3RD: {prizeDistribution.third}pts</div>
+                    <div>4TH: {prizeDistribution.fourth}pts</div>
                 </div>
                 <div className={Styles.prizePool}>PRIZE POOL</div>
-                <div className={Styles.prizeValue}>￥{getPrizePool()}</div>
+                <div className={Styles.prizeValue}>{getPrizePool()}pts</div>
             </div>
             <div className={Styles.bottomPanel}>
                 <div className={Styles.section}>
